@@ -1,0 +1,13 @@
+base:
+  project: Movie-Analysis-And-Recommendation
+  random_state: 42
+  
+
+source_data:
+  cast_data: Data/cast_details.csv
+  crew_data: Data/crew_details.csv
+  movie_detail_data: Data/movie_details.csv
+  movies_data: Data/movies.csv
+  review_data: Data/movie_tmdb_details.csv
+
+
