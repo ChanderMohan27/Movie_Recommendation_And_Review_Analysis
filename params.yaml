@@ -11,3 +11,10 @@ source_data:
   review_data: Data/movie_tmdb_details.csv
 
 
+artifacts:
+  raw_data: artifacts/raw_data.csv
+
+
+
+
+
