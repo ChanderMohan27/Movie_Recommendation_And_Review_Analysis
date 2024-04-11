@@ -3,7 +3,7 @@ from logger import logging
 from exception import CustomException
 from utils import YamlReader
 
-class data_cleaning:
+class data_cleaner:
     def __init__(self):
         self.reader = YamlReader()
     
@@ -28,14 +28,17 @@ class data_cleaning:
         data = pd.read_csv(raw_data)
 
         # Drop rows with null values in specified columns
-        data.dropna(subset=['director_name', 'cast_names', "genres", "producer_name"], inplace=True)
-        logging.info("Dropping null values from the dataframe")
-        print("#"*40)
-        print(len(data))
+                # data.dropna(subset=['director_name', 'cast_names', "genres", "producer_name"], inplace=True)
+                # logging.info("Dropping null values from the dataframe")
+        data['director_name'].fillna("", inplace=True)
+        data['cast_names'].fillna("", inplace=True)
+        data['genres'].fillna("", inplace=True)
+        data['producer_name'].fillna("", inplace=True)    
         data['tagline'].fillna('', inplace=True)
+
         # Drop remaining null values and reset index
         data = data.dropna().reset_index(drop=True)
-        print(len(data))
+
         # Split overview into lists of words
         data["overview"] = data["overview"].apply(lambda x: x.split())
         # Remove spaces from each word in overview
@@ -66,10 +69,9 @@ class data_cleaning:
         # Combine tags from different columns into a single list
         data["tags"] = data["overview"] + data["genres"] + data["cast_names"] + data["director_name"] + data["producer_name"] + data["tagline"]
         logging.info("Created tag column")
-        # Select only required columns
+        # Select only required columns 
         new_df = data[["movie_id", "title", "tags"]]
-
-        return new_df
+        return new_df 
     
 if __name__ == "__main__":
     # Read configuration parameters
@@ -81,7 +83,7 @@ if __name__ == "__main__":
     cleaned_data = config["artifacts"]["cleaned_data"]
 
     # Initialize preprocessing class
-    data_transformer = data_cleaning()
+    data_transformer = data_cleaner()
 
     # Read CSV files into dataframes and perform preprocessing
     cleaned_data1 = data_transformer.cleaning(raw_data)

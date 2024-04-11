@@ -14,7 +14,7 @@ source_data:
 artifacts:
   raw_data: artifacts/raw_data.csv
   cleaned_data: artifacts/cleaned_data.csv
-
+  similarity: artifacts/similarity.pkl 
 
 
 
