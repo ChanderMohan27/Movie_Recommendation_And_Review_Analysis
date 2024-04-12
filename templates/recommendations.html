@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommendations</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+
+    <style>
+        h1 {
+            font-family: 'Netflix', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: white;
+            font-weight: bold;
+            margin-top: 30px;
+            font-size: 50px;
+         }
+         .movie-container {
+            max-width: 1500px; /* Set a maximum width for the container */
+            height: 1000px; /* Set a specific height for the container */
+            margin: 0 auto; /* Center the container horizontally */
+            padding: 0 20px; /* Add some padding to the sides */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+        
+        
+        .movie-card {
+            width: calc(25% - 20px); /* Four cards per row with some spacing */
+            margin-right: 80px; /* Add space between each card */
+            margin-bottom: 20px; /* Add space between each card and row */
+        }
+        
+        @media screen and (min-width: 768px) {
+            .movie-card {
+                width: calc(25% - 20px); /* Three cards per row with some spacing */
+            }
+        }
+        
+        @media screen and (max-width: 767px) {
+            .movie-card {
+                width: calc(25% - 20px); /* Two cards per row with some spacing */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <center><h1>Recommended Movies based on "{{ movie_name }}"</h1></center>
+    </header>
+    <main>
+        <div class="movie-container">
+            {% for movie, poster, details in recommended_movies_data %}
+                {% if loop.index0 != 0 %}
+                    <div class="movie-card">
+                        <img src="{{ poster }}" alt="Movie Poster" class="poster">
+                        <div class="details">
+                            <p><strong>Movie Name:</strong> {{ movie }}</p>
+                            <p><strong>Release Date:</strong> {{ details.release_date }}</p>
+                            <p><strong>Overview:</strong> {{ details.overview }}</p>
+                            <p><strong>Vote Average:</strong> {{ details.vote_average }}</p>
+                            <p><strong>Vote Count:</strong> {{ details.vote_count }}</p>
+                            <p><strong>Popularity:</strong> {{ details.popularity }}</p>
+                            <p><strong>Original Language:</strong> {{ details.original_language }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </main>
+    <footer>
+        <a href="/">Back to Home</a>
+    </footer>
+</body>
+</html>

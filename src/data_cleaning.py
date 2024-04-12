@@ -35,6 +35,7 @@ class data_cleaner:
         data['genres'].fillna("", inplace=True)
         data['producer_name'].fillna("", inplace=True)    
         data['tagline'].fillna('', inplace=True)
+        data['overview'].fillna('', inplace=True)
 
         # Drop remaining null values and reset index
         data = data.dropna().reset_index(drop=True)

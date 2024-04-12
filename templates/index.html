@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommendation System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Optional: Bootstrap JavaScript (popper.js and jQuery are required for some Bootstrap components) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+            background-image: url('https://images.unsplash.com/photo-1584117756263-bc482c509c49?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); /* Add background image */
+            background-size: cover; /* Cover the entire background */
+            background-position: center; /* Center the background image */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        .search-container {
+            margin-top: 20px; /* Add margin to create space */
+            background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background to make the form more visible */
+            padding: 20px; /* Add padding to the search container */
+            border-radius: 10px; /* Add border radius to the search container */
+        }
+        input[type="text"] {
+            padding: 15px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 1100px; /* Adjusted width of the search bar */
+        }
+        .submit-feedback {
+            margin-top: 20px; 
+        }
+
+        .search-label {
+            font-size: 18px; /* Increase font size */
+            color: #333; /* Change text color */
+            font-weight: bold; /* Make it bold */
+            margin-bottom: 10px; /* Add some bottom margin */
+        }
+        h1 {
+            font-family: 'Netflix', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #e50914;
+            font-weight: bold;
+            margin-top: 30px;
+            font-size: 60px;
+        }
+        /* Add spinner styles */
+        .spinner-border {
+            display: none; /* Initially hide the spinner */
+        }
+
+        /* Show spinner when the button is clicked */
+        .loading .spinner-border {
+            display: inline-block;
+            margin-left: 5px; /* Add some space between the spinner and button text */
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 style="margin-top: -140px;">Movie Recommendation System</h1>
+        </header>
+        <main>
+            <div>
+                <form action="/" method="post" class="loading" id="searchForm">
+                    <center><label for="movie_name" class="search-label" style="color:$gray-800; font-weight: bold; font-size:25px; margin-top: -60px;">Enter a movie name:</label></center>
+                    <input type="text" style="margin-top: 20px;" id="movie_name" name="movie_name" required>
+                    <div class="container" style="margin-top: 20px;">
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" id="submitBtn" class="btn btn-primary btn-lg btn-block">Recommendation</button>
+                            </div>
+                            <div class="col">
+                                <a href="/show_details?movie_name={{ movie_name }}" class="btn btn-secondary btn-lg btn-block">Show Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

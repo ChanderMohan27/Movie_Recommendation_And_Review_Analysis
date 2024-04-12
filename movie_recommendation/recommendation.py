@@ -3,32 +3,93 @@ import pickle
 import sys
 sys.path.append("/Users/chandermohan/Desktop/Football_Project/src")
 sys.path.append("/Users/chandermohan/Desktop/Football_Project/API")
-
+import requests
 from logger import logging
 from data_cleaning import data_cleaner
 from utils import YamlReader
 from text_preprocessing import TextPreprocessing
 from movie_search import MovieInfo     
+import os
+from dotenv import load_dotenv
 
+# Load environment variables from .env file
+load_dotenv()
+
+# API key
+API_KEY = os.getenv("API_KEY")
+
+headers = {
+    "accept": "application/json",
+    "Authorization": f"Bearer {API_KEY}"
+}
 
 class Recommendation:
     def __init__(self, dataset, similarity):
         self.dataset = dataset
         self.similarity = similarity
+        self.headers = {
+            "accept": "application/json",
+            "Authorization": f"Bearer {API_KEY}"
+        }
+ 
+    
+    def fetch_movie_details(self, movie_id):
+        url = f"https://api.themoviedb.org/3/movie/{movie_id}?language=en-US"
+        response = requests.get(url, headers=self.headers)
+        data = response.json()
+        return { 
+            'release_date': data.get('release_date', ''),
+            'overview': data.get('overview', ''),
+            'vote_average': data.get('vote_average', ''),
+            'vote_count': data.get('vote_count', ''),
+            'popularity': data.get('popularity', ''),
+            'original_language': data.get('original_language', '')
+        } 
+    
+    def fetch_poster(self, movie_id):
+        url = f"https://api.themoviedb.org/3/movie/{movie_id}?language=en-US"
+        data = requests.get(url, headers=self.headers)
+        data = data.json()
+        poster_path = data['poster_path'] 
+        full_path = "https://image.tmdb.org/t/p/w500/" + poster_path
+        return full_path
+
 
     def recommend(self, movie):
-
         data = pd.read_csv(self.dataset)
-        
-        movie_index = data[data["title"] == movie].index[0]
+        recommended_movies = [] 
+        recommended_posters = []
+        recommended_details = []
+        movie_search = MovieInfo() 
+        movie_info = movie_search.get_movie_info(movie) 
+        movie_name_id = movie_info["movie_id"]
+        movie_index = data[data["movie_id"] == movie_name_id].index[0]
+
+        poster_url = self.fetch_poster(movie_name_id)
+        if poster_url:
+                recommended_posters.append(poster_url)
+                recommended_movies.append(movie_info['title'])
+                details = self.fetch_movie_details(movie_name_id)
+                recommended_details.append(details)
 
         distances = self.similarity[movie_index]
         movies_list = sorted(enumerate(distances), reverse=True, key=lambda x: x[1])[1:6]
-        recommended_movies = [data.iloc[i[0]]['title'] for i in movies_list]
-        return recommended_movies
+        for i in movies_list:  
+            movie_id = data.iloc[i[0]].movie_id 
+            poster_url = self.fetch_poster(movie_id)
+            if poster_url:
+                recommended_posters.append(poster_url)
+                recommended_movies.append(data.iloc[i[0]]['title'])
+                details = self.fetch_movie_details(movie_id)
+                recommended_details.append(details)
+
+        return recommended_movies, recommended_posters, recommended_details 
+    
+    
 
 
 class SimilarityCalculator: 
+
     def __init__(self, dataset, similarity_file):
         self.reader = YamlReader()
         self.dataset = dataset
@@ -36,17 +97,20 @@ class SimilarityCalculator:
 
     def calculate_similarity(self, movie_title):
         config = self.reader.read_param() 
-        data = pd.read_csv(self.dataset)
+        data = pd.read_csv(self.dataset) 
         clean_data_path = config["artifacts"]["cleaned_data"]
+        movie_search = MovieInfo()
+        movie_info = movie_search.get_movie_info(movie_title) 
+        movie_name_id = movie_info["movie_id"]
 
         # cleaned_data = pd.read_csv(clean_data_path)
-        if movie_title in data["title"].to_list():
+        if movie_name_id in data["movie_id"].to_list(): 
             with open(self.similarity_file, 'rb') as file:
-                similarity_matrix = pickle.load(file)
+                similarity_matrix = pickle.load(file) 
 
         else: 
-            movie_search = MovieInfo()
-            movie_info = movie_search.get_movie_info(movie_title)
+
+            # movie_info = movie_search.get_movie_info(movie_title) 
             new_df = pd.DataFrame(movie_info, index=[0])
         
             dataa = pd.concat([data, new_df], ignore_index=True) 
@@ -63,18 +127,15 @@ class SimilarityCalculator:
         
             similarity_matrix = text_processor.text_processing()
 
-            print("#"*40)
-            print("#"*40)
-            print("#"*40) 
 
             with open(self.similarity_file, "wb") as file:
                 pickle.dump(similarity_matrix, file)
         
-        return similarity_matrix
+        return similarity_matrix 
 
 
 if __name__ == "__main__":
-    movie_name = "The Legend of Al, John and Jack"
+    movie_name = "The Kite Runner"
 
     # Read configuration parameters
     reader = YamlReader()
