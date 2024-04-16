@@ -38,27 +38,10 @@ def index():
 
             selected_movie = request.form['movie_name']
             # Redirect to the show_details route
-            movie_detail = []
-            movie_poster = []
-            movie_title = []
-            
-            
-            movie_info = MovieInfo()
-            recomentation = Recommendation(raw_data, similarity_vector)
-            dataa = movie_info.get_movie_info(selected_movie)
-            movie_name_id = dataa["movie_id"]
-            poster_url = recomentation.fetch_poster(movie_name_id)
-            if poster_url:
-                movie_poster.append(poster_url)
-                details = recomentation.fetch_movie_details(movie_name_id)
-                movie_detail.append(details)
-                movie_title.append(selected_movie) 
-                
-            movies_data = zip(movie_title, movie_poster, movie_detail)
-            
-            # Pass the fetched movie info to the template 
-            return render_template('show_details.html', movie_namee=selected_movie, recommended_movies_data=movies_data)
+            session["movie_name_info"] = selected_movie
 
+
+            return redirect(url_for('show_details'))
         else:
             selected_movie = request.form['movie_name']
 

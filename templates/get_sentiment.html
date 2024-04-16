@@ -125,12 +125,13 @@
                             
                             {% for review, sentiment in reviews %}
                                 {% if sentiment == "positive" %}
-                                    <li class="positive">{{ review }}</li>
+                                    <li class="positive"> • {{ review }}</li>
                                 {% elif sentiment == "negative" %}
-                                    <li class="negative">{{ review }}</li>
+                                    <li class="negative"> • {{review }}</li>
                                 {% else %}
-                                    <li>{{ review }}</li>
+                                    <li> • {{ review }}</li>
                                 {% endif %}
+                                <br> 
                             {% endfor %}
                         </ul>
                     </div>

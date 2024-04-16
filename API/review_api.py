@@ -2,6 +2,9 @@ import requests
 import pandas as pd
 
 import os
+import string
+string.punctuation
+import re
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -17,6 +20,23 @@ class Review_info:
             "accept": "application/json",
             "Authorization": f"Bearer {API_KEY}"
         }
+    
+
+    def remove_special_tags(self, text):
+        # Remove 'http' if available
+        cleaned_text = re.sub(r'http\S+', '', text)
+        # Remove 'Rating: [Letter]' if available
+        cleaned_text = re.sub(r'Rating: [A-Za-z]', '', cleaned_text)
+        return cleaned_text
+
+    def remove_tags(self, text):
+        cleaned_text = text.replace('<br />', '')
+        cleaned_texts = self.remove_special_tags(cleaned_text)
+        nopunc = [x for x in cleaned_texts if x not in string.punctuation]
+        nopunc = ''.join(nopunc)
+
+
+        return nopunc 
 
     def get_movie_reviews(self,movie_id):
         # Construct the URL to fetch reviews for the specified movie
@@ -34,9 +54,10 @@ class Review_info:
         all_reviews = []
         if reviews:
             for review in reviews:
-                review_info = review.get('content', '')          
-                all_reviews.append(review_info)
-        
+                review_info = review.get('content', '')  
+
+                cleaned_review= self.remove_tags(review_info)     
+                all_reviews.append(cleaned_review)
         else:
             all_reviews.append("Movie Review Not Avilable")
 
@@ -46,12 +67,12 @@ class Review_info:
 
 if __name__ == "__main__":
     
-    movie_id = 1680
+    movie_id = 823464
     review_info = Review_info()
 
     reviews = review_info.get_movie_reviews(movie_id)
 
-    print(reviews) 
+    print(reviews)
 
 
 # df = pd.read_csv("cleaned_movies.csv")
