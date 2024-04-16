@@ -1,7 +1,10 @@
 import requests
 import pandas as pd
-
 import os
+import sys
+sys.path.append("/Users/chandermohan/Desktop/Football_Project/src")
+from logger import logging
+
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -25,6 +28,7 @@ headers = {
     }
 counter = 0
 
+logging.info("collecting Movie Crew and Cast info through api")
 for movie_id in movie_ids:
     url = f"https://api.themoviedb.org/3/movie/{movie_id}/credits?language=en-US"     
 
@@ -80,14 +84,4 @@ for movie_id in movie_ids:
     counter+=1
     print(counter)
 
-    # Append to list of crew dataframes
-    #crew_dfs.append(filtered_crew_df1)
-    
-# Concatenate all cast and crew dataframes
-# final_cast_df = pd.concat(cast_dfs, ignore_index=True)
-# final_crew_df = pd.concat(crew_dfs, ignore_index=True)
-
-
-# final_cast_df.to_csv("cast_info.csv", index=False)
-
-# final_crew_df.to_csv("crew_info.csv", index= False)
+    logging.info("saved crew csv and cast csv though api")

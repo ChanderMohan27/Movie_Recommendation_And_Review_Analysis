@@ -17,19 +17,30 @@ class sentiment_prediction:
 
     def prediction(self,text):
         
+        logging.info("Doing Sentiment Analysis for Movie Review")
         config = self.reader.read_param()
         model_path = config["artifacts"]["review_pipeline"]
+
+        # Loading Sentiment analysis prediction model 
+
         with open(model_path, 'rb') as file:
             saved_pipeline = pickle.load(file)
+
+        # Cleaning Review by using text cleaning functions 
+
         data_cleaner = text_cleaner()
+        logging.info("Doing Review's text preprocessing by removing stop words and other text preprocessing")
         remove_punctuation = data_cleaner.remove_tags_stopword(text)
 
-        clean_text = data_cleaner.convert_slang(remove_punctuation)
+        # clean_text = data_cleaner.convert_slang(remove_punctuation)
 
-        clean_text_series = pd.Series(clean_text)
+        clean_text_series = pd.Series(remove_punctuation)
+        # Doing prediction on the basis of sentiment analysis model 
+        
         prediction = saved_pipeline.predict(clean_text_series)
 
         prediction = prediction[0]
+        logging.info("Getting Review's Sentiment Analysis")
 
         return prediction 
     

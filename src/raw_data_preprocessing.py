@@ -12,7 +12,7 @@ class Preprocessing:
         return df
 
     def csv_to_df(self, movie_csv, extra_movie_csv, cast_csv, crew_csv):
-        logging.info("Reading the Data files")
+        logging.info("Reading different Movie detail files from different CSVs")
         movie_df = self.read_csv(movie_csv)
         extra_movie_df = self.read_csv(extra_movie_csv)
         cast_df = self.read_csv(cast_csv)
@@ -108,3 +108,5 @@ if __name__ == "__main__":
     final_df = processor.preprocess(movie_df, extra_movie_df, cast_df, crew_df)
 
     final_df.to_csv(combined_csv, index=False)
+
+    logging.info("Preprocessing Done store the cleaned data in Raw CSV file")

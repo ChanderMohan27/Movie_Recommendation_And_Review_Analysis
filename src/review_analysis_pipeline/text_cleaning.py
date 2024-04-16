@@ -3,7 +3,8 @@ import pandas as pd
 import sys
 
 sys.path.append("/Users/chandermohan/Desktop/Football_Project/src")
-
+sys.path.append("/Users/chandermohan/Desktop/Football_Project/src")
+from logger import logging
 from utils import YamlReader
 import string
 string.punctuation
@@ -19,6 +20,7 @@ class text_cleaner():
         self.reader = YamlReader()
     
     def remove_tags_stopword(self, text):
+        logging.info("Using remove_tags_stopword function to do review text cleaning")
         cleaned_text = text.replace('<br />', '')
         nopunc = [x for x in cleaned_text if x not in string.punctuation]
         nopunc = ''.join(nopunc)
@@ -30,7 +32,7 @@ class text_cleaner():
     def convert_slang(self, text):
         words = word_tokenize(text)
         converted_words = []
-
+        logging.info("Replacing words with there synonyms words")
         for word in words:
             # Get synonyms for the current word
             synonyms = wordnet.synsets(word)

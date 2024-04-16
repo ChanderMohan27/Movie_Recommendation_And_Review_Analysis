@@ -8,6 +8,8 @@ from nltk.stem.porter import PorterStemmer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
+from logger import logging
+
 class TextPreprocessing: 
     def __init__(self, dataset):
         self.reader = YamlReader()
@@ -26,7 +28,8 @@ class TextPreprocessing:
     def text_processing(self):
         """Perform text preprocessing and calculate similarity matrix."""
         data = pd.read_csv(self.dataset)
-
+        
+        logging.info("Staring tags preprocessing to create Cosine simiarity Matrix")
         # Convert string representation of lists to actual lists
         data["tags"] = data["tags"].apply(self.string_to_list)
 
@@ -41,7 +44,7 @@ class TextPreprocessing:
 
         # Calculate cosine similarity matrix
         similarity_matrix = cosine_similarity(vectors)
-
+        logging.info("similarity_matrix created")
         return similarity_matrix
     
 if __name__ == "__main__":

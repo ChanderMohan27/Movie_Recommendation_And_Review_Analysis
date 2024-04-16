@@ -3,7 +3,9 @@ import pandas as pd
 
 import os
 from dotenv import load_dotenv
-
+import sys
+sys.path.append("/Users/chandermohan/Desktop/Football_Project/src")
+from logger import logging
 # Load environment variables from .env file
 load_dotenv()
 
@@ -17,7 +19,7 @@ all_data = []
 # Api to get the movie detail...
 
 for page in range(1, 1001):  # Assuming you want to fetch data from pages 1 to 2
-    
+    logging.info("Collecting movie information from api")
     url = f"https://api.themoviedb.org/3/trending/movie/week?language=en-US&page={page}"
     
     headers = {
@@ -49,3 +51,5 @@ for page in range(1, 1001):  # Assuming you want to fetch data from pages 1 to 2
 df = pd.DataFrame(all_data)
 
 df.to_csv("movies.csv", index= False)
+
+logging.info("Saved Movie data in CSV file through API")

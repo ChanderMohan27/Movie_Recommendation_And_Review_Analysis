@@ -3,7 +3,8 @@ import pandas as pd
 import sys
 
 sys.path.append("/Users/chandermohan/Desktop/Football_Project/src")
-
+sys.path.append("/Users/chandermohan/Desktop/Football_Project/src")
+from logger import logging
 from utils import YamlReader
 import string
 string.punctuation
@@ -30,7 +31,8 @@ class model_trainer():
 
         df = pd.read_csv(data)
         reviews = df["cleaned_review"]
-
+        
+        logging.info("implimenting CountVectorizer on cleaned Review list")
         bow_transformer = CountVectorizer(analyzer='word').fit(reviews)
 
         reviews_bow = bow_transformer.transform(reviews)
@@ -40,20 +42,25 @@ class model_trainer():
         tfidf_transformer = TfidfTransformer().fit(reviews_bow)
 
         #To transform the entire bag-of-words corpus into TF-IDF corpus at once
-
+        logging.info("Transforming Count Vectors into tfidf corpus")
         reviews_tfidf = tfidf_transformer.transform(reviews_bow)
 
         model = MultinomialNB().fit(reviews_tfidf, df['sentiment'])
 
         msg_train, msg_test, label_train, label_test = train_test_split(reviews,df['sentiment'], test_size=0.2)
-
+        
+        logging.info("Creating Pipeline to do classification of Review (Sentiment Analysis)")
         pipeline = Pipeline([
                     ('bow', CountVectorizer(analyzer='word')),  # strings to token integer counts
                     ('tfidf', TfidfTransformer()),  # integer counts to weighted TF-IDF scores
                     ('classifier', MultinomialNB()),  # train on TF-IDF vectors w/ Naive Bayes classifier
                             ])
         
+        # Training the pipeline on the training Data 
+        
         pipeline.fit(msg_train,label_train)
+
+        logging.info("Pipeline Created....")
 
         return pipeline
     

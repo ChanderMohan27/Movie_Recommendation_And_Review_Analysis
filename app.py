@@ -34,15 +34,6 @@ similarity_calculator = SimilarityCalculator(raw_data, similarity_vector)
 def index():
     if request.method == 'POST':
 
-        if 'show_details' in request.form:
-
-            selected_movie = request.form['movie_name']
-            # Redirect to the show_details route
-            session["movie_name_info"] = selected_movie
-
-
-            return redirect(url_for('show_details'))
-        else:
             selected_movie = request.form['movie_name']
 
             similarity_matrix = similarity_calculator.calculate_similarity(selected_movie)
@@ -57,29 +48,29 @@ def index():
 
     return render_template('index.html')
 
-@app.route('/show_details')
+# @app.route('/show_details')
 
-def show_details():
-    movie_detail = []
-    movie_poster = []
-    movie_title = []
+# def show_details():
+#     movie_detail = []
+#     movie_poster = []
+#     movie_title = []
     
-    movie_namee = session.get('movie_name_info')
-    movie_info = MovieInfo()
-    recomentation = Recommendation(raw_data, similarity_vector)
-    dataa = movie_info.get_movie_info(movie_namee)
-    movie_name_id = dataa["movie_id"]
-    poster_url = recomentation.fetch_poster(movie_name_id)
-    if poster_url:
-        movie_poster.append(poster_url)
-        details = recomentation.fetch_movie_details(movie_name_id)
-        movie_detail.append(details)
-        movie_title.append(movie_namee) 
+#     movie_namee = session.get('movie_name_info')
+#     movie_info = MovieInfo()
+#     recomentation = Recommendation(raw_data, similarity_vector)
+#     dataa = movie_info.get_movie_info(movie_namee)
+#     movie_name_id = dataa["movie_id"]
+#     poster_url = recomentation.fetch_poster(movie_name_id)
+#     if poster_url:
+#         movie_poster.append(poster_url)
+#         details = recomentation.fetch_movie_details(movie_name_id)
+#         movie_detail.append(details)
+#         movie_title.append(movie_namee) 
         
-    movies_data = zip(movie_title, movie_poster, movie_detail)
+#     movies_data = zip(movie_title, movie_poster, movie_detail)
     
-    # Pass the fetched movie info to the template 
-    return render_template('show_details.html', movie_namee=movie_namee, recommended_movies_data=movies_data)
+#     # Pass the fetched movie info to the template 
+#     return render_template('show_details.html', movie_namee=movie_namee, recommended_movies_data=movies_data)
 
 
 

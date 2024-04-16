@@ -2,6 +2,9 @@ import requests
 import pandas as pd
 import os
 from dotenv import load_dotenv
+import sys
+sys.path.append("/Users/chandermohan/Desktop/Football_Project/src")
+from logger import logging
 
 # Load environment variables from .env file
 load_dotenv()
@@ -17,7 +20,7 @@ class MovieInfo:
         }
     def get_movie_info(self,movie_name):
             
-
+            logging.info("Collecting Movie Details by using Moive search API")
             # Search for the movie by name
             url = f"https://api.themoviedb.org/3/search/movie?query={movie_name}&include_adult=false&language=en-US&page=1"
             response = requests.get(url, headers=self.headers)
@@ -69,7 +72,7 @@ class MovieInfo:
                 "producer_name": str(producer_name),
                 "tagline" : str(tagline)
             }
-
+            logging.info("Processing Done, Collected necessary movie detail though different API's")
             return movie_info
     
 

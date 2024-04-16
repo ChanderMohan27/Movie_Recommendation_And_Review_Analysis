@@ -10,6 +10,10 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
+import sys
+sys.path.append("/Users/chandermohan/Desktop/Football_Project/src")
+from logger import logging
+
 # API key
 API_KEY = os.getenv("API_KEY")
 
@@ -39,6 +43,8 @@ class Review_info:
         return nopunc 
 
     def get_movie_reviews(self,movie_id):
+
+        logging.info("Calling Moive Review API to collect Moive Reviews")
         # Construct the URL to fetch reviews for the specified movie
         url = f"https://api.themoviedb.org/3/movie/{movie_id}/reviews?language=en-US&page=1"
         
@@ -60,9 +66,11 @@ class Review_info:
                 all_reviews.append(cleaned_review)
         else:
             all_reviews.append("Movie Review Not Avilable")
+        
+        logging.info("Collected Avilable Review in a form of list")
 
         return all_reviews
-
+ 
 
 
 if __name__ == "__main__":

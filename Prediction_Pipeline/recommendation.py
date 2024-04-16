@@ -84,6 +84,7 @@ class Recommendation:
         recommended_posters = []
         recommended_details = []
         all_movie_reviews = [] 
+        logging.info("Finding Related movie on the basis of User entered")
         movie_search = MovieInfo() 
         movie_info = movie_search.get_movie_info(movie) 
         movie_name_id = movie_info["movie_id"] 
@@ -115,6 +116,8 @@ class Recommendation:
             details = self.fetch_movie_details(movie_id)
             recommended_details.append(details)
             all_movie_reviews.append(moive_review) 
+
+            logging.info("Collected all the best 5 movie that is realted to User Entered movie")
         return recommended_movies, recommended_posters, recommended_details, all_movie_reviews
     
     
@@ -138,11 +141,12 @@ class SimilarityCalculator:
 
         # cleaned_data = pd.read_csv(clean_data_path)
         if movie_name_id in data["movie_id"].to_list(): 
+            logging.info("Loading old Similarity Vector if movie present in our Dataset")
             with open(self.similarity_file, 'rb') as file:
                 similarity_matrix = pickle.load(file) 
 
         else: 
-
+            logging.info("Getting info of New movie and storing in the database")
             # movie_info = movie_search.get_movie_info(movie_title) 
             new_df = pd.DataFrame(movie_info, index=[0])
         
@@ -163,7 +167,7 @@ class SimilarityCalculator:
 
             with open(self.similarity_file, "wb") as file:
                 pickle.dump(similarity_matrix, file)
-        
+            logging.info("Created new similarity matrix on the basis of additional movie detail and previous data")
         return similarity_matrix
 
 
@@ -189,14 +193,3 @@ if __name__ == "__main__":
 
     recommended_movies,b,c, movie_review = recommender.recommend(movie_name)
 
-    # Print recommended movies
-    # print("#" * 40)
-    # print("#" * 40)
-    # print("#" * 40)
-    # print(movie_review)
-    # print(f"Top 5 Movies based on {movie_name}:\n")
-    # # for recommended_movie in recommended_movies:
-    #     print(recommended_movie)
-    print("#" * 40)
-    print("#" * 40)
-    print("#" * 40)
