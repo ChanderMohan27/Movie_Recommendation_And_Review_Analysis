@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Details</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .movie-details-single {
+            width: 100%;
+            margin: 20px 0;
+            padding: 0 20px;
+            display: flex; /* Add display flex */
+            justify-content: center;
+            align-items: center; /* Center vertically */
+        }
+        
+        .movie-details-single .movie-card {
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+        
+        .movie-details-single img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .movie-details-single .details {
+            font-size: 16px;
+        }
+        
+        .movie-details-single .details p {
+            margin: 5px 0;
+        }
+        
+        .movie-details-single .details p strong {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        
+        .movie-details-single .details ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .movie-details-single .details ul li {
+            margin-bottom: 5px;
+        }
+        
+        .positive {
+            color: green;
+        }
+        
+        .negative {
+            color: red;
+        }
+
+        .custom-reviews {
+            /* Define styles for the entire reviews list */
+            /* For example: */
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+        }
+        
+        .custom-reviews li {
+            /* Define styles for each review item */
+            /* For example: */
+            margin-bottom: 10px;
+        }
+        
+        .custom-reviews .positive-review {
+            /* Define styles for positive reviews */
+            color: green;
+        }
+        
+        .custom-reviews .negative-review {
+            /* Define styles for negative reviews */
+            color: red;
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Movie Details</h1>
+        <!-- Include any additional header content here -->
+    </header>
+    <main> 
+        {% for title, poster, details, reviews in recommended_movies_data %}
+            <center><h2>{{ title }}</h2></center>
+            <div class="movie-details-single">
+                <div class="movie-card">
+                    <img src="{{ poster }}" alt="Movie Poster">
+                    <div class="details"> 
+                        <p><strong>Movie Name:</strong> {{ title }}</p>
+                        <p><strong>Release Date:</strong> {{ details.release_date }}</p>
+                        <p><strong>Overview:</strong> {{ details.overview }}</p>
+                        <p><strong>Vote Average:</strong> {{ details.vote_average }}</p>
+                        <p><strong>Vote Count:</strong> {{ details.vote_count }}</p>
+                        <p><strong>Popularity:</strong> {{ details.popularity }}</p>
+                        <p><strong>Original Language:</strong> {{ details.original_language }}</p>
+                        <p><strong>Reviews:</strong></p>
+                        <ul class="custom-reviews">
+                            
+                            {% for review, sentiment in reviews %}
+                                {% if sentiment == "positive" %}
+                                    <li class="positive">{{ review }}</li>
+                                {% elif sentiment == "negative" %}
+                                    <li class="negative">{{ review }}</li>
+                                {% else %}
+                                    <li>{{ review }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </main>
+</body>
+</html>

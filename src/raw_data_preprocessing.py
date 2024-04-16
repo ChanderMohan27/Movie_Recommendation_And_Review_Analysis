@@ -33,7 +33,8 @@ class Preprocessing:
 
         crew_df = crew_df.drop_duplicates()
 
-        # Filter rows for Producer
+        # Filter rows for Producer 
+
         producers_df = crew_df[crew_df['job'] == 'Producer']
 
         # Group by movie_id 
@@ -49,6 +50,7 @@ class Preprocessing:
         grouped = Director_df.groupby('movie_id')
 
         # Get the first producer for each movie
+
         first_Director_per_movie = grouped.first().reset_index()
 
         first_Director_per_movie.rename(columns={'name': 'director_name'}, inplace=True)

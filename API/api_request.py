@@ -10,10 +10,12 @@ load_dotenv()
 # API key
 API_KEY = os.getenv("API_KEY")
 
+
 # List to store all data from all pages
 all_data = []
 
 # Api to get the movie detail...
+
 for page in range(1, 1001):  # Assuming you want to fetch data from pages 1 to 2
     
     url = f"https://api.themoviedb.org/3/trending/movie/week?language=en-US&page={page}"

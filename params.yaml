@@ -9,13 +9,15 @@ source_data:
   movie_detail_data: Data/movie_details.csv
   movies_data: Data/movies.csv
   review_data: Data/movie_tmdb_details.csv
+  imdb_data: Data/IMDB_Dataset_review.csv
 
 
 artifacts:
   raw_data: artifacts/raw_data.csv
   cleaned_data: artifacts/cleaned_data.csv
+  imdb_review: artifacts/imdb_review.csv
   similarity: artifacts/similarity.pkl 
-
+  review_pipeline: artifacts/review_pipeline.pkl
 
 
 

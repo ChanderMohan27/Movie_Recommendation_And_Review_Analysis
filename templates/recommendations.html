@@ -24,7 +24,6 @@
             justify-content: flex-start;
         }
         
-        
         .movie-card {
             width: calc(25% - 20px); /* Four cards per row with some spacing */
             margin-right: 80px; /* Add space between each card */
@@ -42,18 +41,30 @@
                 width: calc(25% - 20px); /* Two cards per row with some spacing */
             }
         }
+
+        /* Define colors for positive and negative reviews */
+        .positive {
+            color: green;
+        }
+
+        .negative {
+            color: red;
+        }
     </style>
 </head>
 <body>
     <header>
-        <center><h1>Recommended Movies based on "{{ movie_name }}"</h1></center>
+        <center><h1>Recommended Movies Based On: </h1></center>
     </header>
-    <main>
+    <center><h1><a href="{{ url_for('get_sentiment', movie_name=movie_name) }}" style="text-decoration: underline; color: #000000;">{{ movie_name }}</a></h1></center>
+    <main> 
         <div class="movie-container">
-            {% for movie, poster, details in recommended_movies_data %}
+            {% for movie, poster, details, reviews in recommended_movies_data %}
                 {% if loop.index0 != 0 %}
                     <div class="movie-card">
-                        <img src="{{ poster }}" alt="Movie Poster" class="poster">
+                        <a href="{{ url_for('get_sentiment', movie_name=movie) }}">
+                            <img src="{{ poster }}" alt="Movie Poster" class="poster">
+                        </a>
                         <div class="details">
                             <p><strong>Movie Name:</strong> {{ movie }}</p>
                             <p><strong>Release Date:</strong> {{ details.release_date }}</p>
@@ -62,14 +73,12 @@
                             <p><strong>Vote Count:</strong> {{ details.vote_count }}</p>
                             <p><strong>Popularity:</strong> {{ details.popularity }}</p>
                             <p><strong>Original Language:</strong> {{ details.original_language }}</p>
+                        
                         </div>
                     </div>
                 {% endif %}
             {% endfor %}
         </div>
     </main>
-    <footer>
-        <a href="/">Back to Home</a>
-    </footer>
 </body>
 </html>

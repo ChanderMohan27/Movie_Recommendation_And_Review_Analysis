@@ -8,7 +8,7 @@ from nltk.stem.porter import PorterStemmer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-class TextPreprocessing:
+class TextPreprocessing: 
     def __init__(self, dataset):
         self.reader = YamlReader()
         self.ps = PorterStemmer()
@@ -63,5 +63,7 @@ if __name__ == "__main__":
     # Save similarity matrix to file
     with open(similarity_path, "wb") as file:
         pickle.dump(similarity_matrix, file)
+
+    
 
     logging.info("Similarity matrix saved successfully.")

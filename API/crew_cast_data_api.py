@@ -24,8 +24,9 @@ headers = {
         "Authorization": f"Bearer {API_KEY}"
     }
 counter = 0
+
 for movie_id in movie_ids:
-    url = f"https://api.themoviedb.org/3/movie/{movie_id}/credits?language=en-US"
+    url = f"https://api.themoviedb.org/3/movie/{movie_id}/credits?language=en-US"     
 
     response = requests.get(url, headers=headers)
     data = response.json()
@@ -37,7 +38,9 @@ for movie_id in movie_ids:
     # Filter only the rows where the order is 0, 1, or 2
     filtered_cast_df = cast_df[cast_df.get('order', pd.Series([])).isin([0, 1, 2, 3])]
     # Add movie_id column
+
     filtered_cast_df['movie_id'] = movie_id
+
     try:
 
         final_dataframe = filtered_cast_df[["id","name","profile_path","movie_id"]]
@@ -50,11 +53,13 @@ for movie_id in movie_ids:
 
     # Extract crew data
     crew_data = data.get("crew", [])
+
     # Create DataFrame for crew
-    crew_df = pd.DataFrame(crew_data)
+    crew_df = pd.DataFrame(crew_data) 
+
     # Filter crew data
     try:
-        filtered_crew_df = crew_df[
+        filtered_crew_df = crew_df[ 
             ((crew_df['department'] == 'Production') & (crew_df['job'] == 'Producer')) |
             ((crew_df['department'] == 'Writing') & (crew_df['job'] == 'Writer')) |
             ((crew_df['department'] == 'Directing') & (crew_df['job'] == 'Director'))

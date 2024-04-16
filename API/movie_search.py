@@ -22,7 +22,7 @@ class MovieInfo:
             url = f"https://api.themoviedb.org/3/search/movie?query={movie_name}&include_adult=false&language=en-US&page=1"
             response = requests.get(url, headers=self.headers)
             data = response.json()
-            print(data)
+            
             # Get movie ID
             movie_id = data['results'][0]['id']
 
