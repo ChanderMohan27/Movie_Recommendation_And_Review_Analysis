@@ -18,7 +18,19 @@ This project implements a robust movie recommendation system with sentiment anal
 - Performs sentiment analysis on movie reviews.
 - Displays movie recommendations and sentiment analysis results on a web interface using flask.
 
+<<<<<<< HEAD
 ![](<Screenshot 2024-04-17 at 1.40.08 pm.png>)
+=======
+
+<img width="1440" alt="Screenshot 2024-04-17 at 1 40 08 pm" src="https://github.com/ChanderMohan27/Movie_Recommendation_And_Review_Analysis/assets/128381758/84b68a98-8280-44a1-bbb4-a0009dcf2ac6">
+
+<img width="1440" alt="Screenshot 2024-04-17 at 1 40 59 pm" src="https://github.com/ChanderMohan27/Movie_Recommendation_And_Review_Analysis/assets/128381758/3e60862d-3310-41e8-bc5a-05e26903d226">
+
+<img width="1440" alt="Screenshot 2024-04-17 at 1 41 09 pm" src="https://github.com/ChanderMohan27/Movie_Recommendation_And_Review_Analysis/assets/128381758/f41de314-028f-455a-aa81-a67e7dfc999d">
+
+<img width="1440" alt="Screenshot 2024-04-17 at 1 48 15 pm" src="https://github.com/ChanderMohan27/Movie_Recommendation_And_Review_Analysis/assets/128381758/80623b4d-43db-406f-bcfe-531e2342b5dd">
+
+>>>>>>> origin/main
 ## Usage
 
 ## Architecture
