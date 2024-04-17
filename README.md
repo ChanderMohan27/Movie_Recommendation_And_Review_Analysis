@@ -18,6 +18,7 @@ This project implements a robust movie recommendation system with sentiment anal
 - Performs sentiment analysis on movie reviews.
 - Displays movie recommendations and sentiment analysis results on a web interface using flask.
 
+![](<Screenshot 2024-04-17 at 1.40.08 pm.png>)
 ## Usage
 
 ## Architecture
