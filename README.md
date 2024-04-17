@@ -25,7 +25,7 @@ This project implements a robust movie recommendation system with sentiment anal
 
 <img width="1440" alt="Screenshot 2024-04-17 at 1 41 09 pm" src="https://github.com/ChanderMohan27/Movie_Recommendation_And_Review_Analysis/assets/128381758/f41de314-028f-455a-aa81-a67e7dfc999d">
 
-<img width="1440" alt="Screenshot 2024-04-17 at 1 42 00 pm" src="https://github.com/ChanderMohan27/Movie_Recommendation_And_Review_Analysis/assets/128381758/ae75f219-8188-47ab-9d72-9b6e4f674b77">
+<img width="1440" alt="Screenshot 2024-04-17 at 1 48 15 pm" src="https://github.com/ChanderMohan27/Movie_Recommendation_And_Review_Analysis/assets/128381758/80623b4d-43db-406f-bcfe-531e2342b5dd">
 
 ## Usage
 
