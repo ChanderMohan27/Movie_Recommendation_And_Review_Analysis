@@ -51,7 +51,7 @@ for movie_id in movie_ids:
     except KeyError:
         pass
 
-    final_dataframe.to_csv("cast_details.csv", mode='a',header=write_header, index=False)
+    final_dataframe.to_csv("Data/cast_details.csv", mode='a',header=write_header, index=False)
     # Append to list of cast dataframes
     # cast_dfs.append(final_dataframe)
 
@@ -79,7 +79,7 @@ for movie_id in movie_ids:
     
     # Appending Each row with each iteration in the CSV file
 
-    filtered_crew_df1.to_csv("crew_details.csv", mode='a', header= write_header, index = False)
+    filtered_crew_df1.to_csv("Data/crew_details.csv", mode='a', header= write_header, index = False)
     write_header = False
     counter+=1
     print(counter)

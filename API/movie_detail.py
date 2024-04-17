@@ -55,6 +55,6 @@ for movie_id in movie_ids:
 df = pd.DataFrame(movie_data)
 
 # # Writing DataFrame to CSV
-df.to_csv("movie_details.csv", header=write_header, mode='a', index=False)
+df.to_csv("Data/movie_details.csv", header=write_header, mode='a', index=False)
 
 logging.info("Stored extra movie info in csv file collecting data thorugh api")

@@ -50,6 +50,6 @@ for page in range(1, 1001):  # Assuming you want to fetch data from pages 1 to 2
 # Create DataFrame
 df = pd.DataFrame(all_data)
 
-df.to_csv("movies.csv", index= False)
+df.to_csv("Data/movies.csv", index= False)
 
 logging.info("Saved Movie data in CSV file through API")
